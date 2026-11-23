@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USTALIK — 90 Gün</title>
+<style>
+:root{--bg:#0c1118;--panel:#151d27;--panel2:#1b2633;--text:#e9eef4;--muted:#9eacbc;--line:#293746;--green:#62d49a;--blue:#74b8ff;--purple:#b9a2ff;--amber:#f4c46b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1000px;margin:auto;padding:24px 16px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:28px;letter-spacing:2px}h2{font-size:18px;margin:0 0 12px}p{margin:5px 0;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}.stat{background:var(--panel2);border-radius:12px;padding:12px}.stat b{font-size:24px;display:block}.stat small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.habit{border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:14px}.habit h3{margin:0 0 8px}.habit label{display:flex;gap:8px;align-items:center;margin:8px 0}.habit input[type=checkbox]{width:20px;height:20px;accent-color:var(--green)}
+input,textarea,button{font:inherit}input[type=number],input[type=text],textarea{background:#0f1720;border:1px solid var(--line);border-radius:8px;color:var(--text);padding:8px;width:100%}
+button{background:var(--green);color:#08140e;border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer}button.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}button.danger{background:#48272a;color:#ffc4c4}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
+textarea{min-height:80px;resize:vertical}.meter{height:9px;background:#27323f;border-radius:20px;overflow:hidden;margin:8px 0}.meter span{height:100%;display:block;background:var(--green);width:0%}
+.calendar{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}.day{aspect-ratio:1;border-radius:6px;background:#202b37;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);border:1px solid #2c3b4b}.day.done{background:#24513c;color:#d6ffea;border-color:#347c59}.day.today{outline:2px solid var(--amber;)}
+.badge{background:#243647;border-radius:99px;padding:4px 9px;color:var(--blue);font-size:12px}.today-banner{margin-top:12px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.today-banner strong{font-size:17px}.today-banner .muted{font-size:13px}.muted{color:var(--muted)}.history{display:grid;gap:8px}.entry{border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.calendar{grid-template-columns:repeat(7,1fr)}h1{font-size:22px}}
+</style>
+</head>
+<body><main>
+<div class="top"><div><h1>USTALIK <span style="color:var(--green)">/ 90 GÜN</span></h1><p>Motivasyon bekleme. İlerlemeni görünür kıl.</p></div><span class="badge" id="level">Seviye 1</span></div><div class="today-banner"><div><strong id="todayTop">Bugün</strong><div class="muted">Günün tarihi</div></div><div style="text-align:right"><strong id="journeyDay">1 / 90</strong><div class="muted">Ustalık yolculuğu</div></div></div>
+<div class="stats">
+<div class="stat"><b id="xp">0</b><small>XP</small></div>
+<div class="stat"><b id="streak">0</b><small>Aktif gün serisi</small></div>
+<div class="stat"><b id="daysDone">0</b><small>Çalışılan gün</small></div>
+<div class="stat"><b id="percent">0%</b><small>90 günlük ilerleme</small></div>
+</div>
+<div class="card"><h2>Bugünün görevleri</h2><p id="dateLabel"></p>
+<div class="grid">
+<div class="habit"><h3 style="color:var(--green)">Trading · Ana hedef</h3><label><input id="tradeCheck" type="checkbox"> Bugün trading çalıştım</label><div class="row"><div><small class="muted">Süre (dk)</small><input id="tradeMinutes" type="number" min="0" step="5" value="90"></div><div><small class="muted">Konu / not</small><input id="tradeNote" type="text" placeholder="Örn. trend yapısı"></div></div></div>
+<div class="habit"><h3 style="color:var(--purple)">Bas gitar</h3><label><input id="bassCheck" type="checkbox"> Bas gitar çalıştım</label><div class="row"><div><small class="muted">Süre (dk)</small><input id="bassMinutes" type="number" min="0" step="5" value="30"></div><div><small class="muted">Çalışma</small><input id="bassNote" type="text" placeholder="Örn. groove / şarkı"></div></div></div>
+<div class="habit"><h3 style="color:var(--blue)">Meditasyon</h3><label><input id="medCheck" type="checkbox"> Meditasyon yaptım</label><small class="muted">Hedef: 10 dakika</small></div>
+<div class="habit"><h3 style="color:var(--amber)">Spor</h3><label><input id="sportCheck" type="checkbox"> Antrenman / hareket yaptım</label><small class="muted">Planlı antrenman veya yürüyüş</small></div>
+</div>
+<div style="margin-top:14px"><small class="muted">Günlük not / değerlendirme</small><textarea id="journal" placeholder="Bugün ne iyi gitti? Yarın neye odaklanacağım?"></textarea></div>
+<div class="row" style="margin-top:12px"><button id="save">Bugünü kaydet</button><button class="secondary" id="clearToday">Bugünkü kayıtları temizle</button></div>
+<p id="savedMsg"></p></div>
+<div class="card"><h2>90 günlük ilerleme haritası</h2><p>Bir gün boş geçmesi, yolculuğun bittiği anlamına gelmez.</p><div class="meter"><span id="progressBar"></span></div><div class="calendar" id="calendar"></div></div>
+<div class="card"><h2>Son kayıtlar</h2><div class="history" id="history"></div></div>
+<div class="card"><h2>Haftalık özet</h2><div class="stats"><div class="stat"><b id="weekTrade">0</b><small>Trading günü</small></div><div class="stat"><b id="weekBass">0</b><small>Bas gitar günü</small></div><div class="stat"><b id="weekMed">0</b><small>Meditasyon günü</small></div><div class="stat"><b id="weekSport">0</b><small>Spor günü</small></div></div></div>
+<div class="row"><button class="secondary" id="export">Verilerimi indir (JSON)</button><button class="danger" id="reset">Tüm 90 günlük veriyi sıfırla</button></div>
+<p style="font-size:12px;margin-top:18px">Veriler bu tarayıcıda saklanır. Başka cihazda otomatik görünmez. Düzenli olarak JSON yedeği indir.</p>
+</main>
+<script>
+const KEY='ustalik90_v1';
+const startKey='ustalik90_start';
+const today=()=>new Date().toLocaleDateString('sv-SE');
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return{}}};
+let data=load();
+let start=localStorage.getItem(startKey);
+if(!start){start=today();localStorage.setItem(startKey,start)}
+const $=id=>document.getElementById(id);
+const keys=['tradeCheck','bassCheck','medCheck','sportCheck','tradeMinutes','bassMinutes','tradeNote','bassNote','journal'];
+function getForm(){return {trade: $('tradeCheck').checked,bass:$('bassCheck').checked,med:$('medCheck').checked,sport:$('sportCheck').checked,tradeMinutes:+$('tradeMinutes').value||0,bassMinutes:+$('bassMinutes').value||0,tradeNote:$('tradeNote').value,bassNote:$('bassNote').value,journal:$('journal').value}}
+function setForm(d={}){$('tradeCheck').checked=!!d.trade;$('bassCheck').checked=!!d.bass;$('medCheck').checked=!!d.med;$('sportCheck').checked=!!d.sport;$('tradeMinutes').value=d.tradeMinutes??90;$('bassMinutes').value=d.bassMinutes??30;$('tradeNote').value=d.tradeNote||'';$('bassNote').value=d.bassNote||'';$('journal').value=d.journal||''}
+function dayDiff(a,b){return Math.floor((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/86400000)}
+function points(d){return (d.trade?25:0)+(d.bass?15:0)+(d.med?10:0)+(d.sport?15:0)}
+function calcStreak(){let s=0,dt=today();if(!data[dt])dt=new Date(Date.now()-86400000).toLocaleDateString('sv-SE');while(data[dt]&&points(data[dt])>0){s++;dt=new Date(new Date(dt+'T12:00:00').getTime()-86400000).toLocaleDateString('sv-SE')}return s}
+function render(){
+const all=Object.entries(data).sort((a,b)=>b[0].localeCompare(a[0]));
+let xp=all.reduce((sum,[,d])=>sum+points(d),0),done=all.filter(([,d])=>points(d)>0).length;
+let elapsed=Math.max(0,dayDiff(start,today())+1),pct=Math.min(100,Math.round(elapsed/90*100));
+$('xp').textContent=xp;$('streak').textContent=calcStreak();$('daysDone').textContent=done;$('percent').textContent=pct+'%';$('progressBar').style.width=pct+'%';
+$('level').textContent='Seviye '+(1+Math.floor(xp/250));let dateText=new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});$('dateLabel').textContent=dateText;$('todayTop').textContent=dateText;let journey=Math.max(1,dayDiff(start,today())+1);$('journeyDay').textContent=Math.min(90,journey)+' / 90';
+let startDate=new Date(start+'T12:00:00'),cal=$('calendar');cal.innerHTML='';
+for(let i=0;i<90;i++){let dt=new Date(startDate.getTime()+i*86400000).toLocaleDateString('sv-SE');let el=document.createElement('div');el.className='day'+(data[dt]&&points(data[dt])>0?' done':'')+(dt===today()?' today':'');el.title=dt;el.textContent=i+1;cal.appendChild(el)}
+let h=$('history');h.innerHTML='';all.slice(0,7).forEach(([dt,d])=>{let e=document.createElement('div');e.className='entry';let label=new Date(dt+'T12:00:00').toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'short'});e.innerHTML=`<div><b>${label}</b><div class="muted">${[d.trade?'Trading':'',d.bass?'Bas gitar':'',d.med?'Meditasyon':'',d.sport?'Spor':''].filter(Boolean).join(' · ')||'Kayıt var'}</div></div><span class="badge">+${points(d)} XP</span>`;h.appendChild(e)});
+let now=new Date(),monday=new Date(now);monday.setDate(now.getDate()-((now.getDay()+6)%7));let week=Array.from({length:7},(_,i)=>new Date(monday.getTime()+i*86400000).toLocaleDateString('sv-SE'));let w=week.map(dt=>data[dt]||{});$('weekTrade').textContent=w.filter(d=>d.trade).length;$('weekBass').textContent=w.filter(d=>d.bass).length;$('weekMed').textContent=w.filter(d=>d.med).length;$('weekSport').textContent=w.filter(d=>d.sport).length;
+}
+setForm(data[today()]);
+$('save').onclick=()=>{data[today()]=getForm();localStorage.setItem(KEY,JSON.stringify(data));render();$('savedMsg').textContent='Bugünün kaydı kaydedildi.'};
+$('clearToday').onclick=()=>{setForm({});$('savedMsg').textContent='Form temizlendi. Kaydetmediğin değişiklikler saklanmaz.'};
+$('export').onclick=()=>{let blob=new Blob([JSON.stringify({start,data},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ustalik90-yedek.json';a.click();URL.revokeObjectURL(url)};
+$('reset').onclick=()=>{if(confirm('Bütün kayıtlar silinsin ve 90 gün yeniden başlasın mı?')){localStorage.removeItem(KEY);localStorage.removeItem(startKey);location.reload()}};
+render();
+</script></body></html>
